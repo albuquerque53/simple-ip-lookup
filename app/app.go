@@ -15,17 +15,25 @@ func Generate() *cli.App {
     app.Name = "Simple IP Loopkup"
     app.Usage = "Look for IPs and nameservers on web"
 
+    flags := []cli.Flag {
+        cli.StringFlag{
+            Name: "host",
+            Value: "duck.com",
+        },
+    }
+
     app.Commands = []cli.Command{
         {
             Name: "ip",
             Usage: "Look for public IP addresses on the internet",
-            Flags: []cli.Flag {
-                cli.StringFlag{
-                    Name: "host",
-                    Value: "duck.com",
-                },
-            },
+            Flags: flags,
             Action: lookupIps,
+        },
+        {
+            Name: "server",
+            Usage: "Look for hostnames on the internet",
+            Flags: flags,
+            Action: lookupHosts,
         },
     }
 
@@ -45,5 +53,21 @@ func lookupIps(context *cli.Context) {
     fmt.Print("\nRESULTS::\n")
     for _, ip := range ips {
         fmt.Println(ip)
+    }
+}
+
+func lookupHosts(context *cli.Context) {
+    host := context.String("host")
+
+    fmt.Printf("Looking for hosts in %s...\n", host)
+    hosts, error := net.LookupNS(host)
+
+    if error != nil {
+        log.Fatal(error)
+    }
+
+    fmt.Print("\nRESULTS::\n")
+    for _, host := range hosts {
+        fmt.Println(host.Host)
     }
 }
