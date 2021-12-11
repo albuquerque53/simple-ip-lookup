@@ -8,12 +8,14 @@ import (
 )
 
 func main() {
-    fmt.Print("\n=-=-=-= SIMPLE IP Lookup =-=-=-=\n\n\n")
+    fmt.Print("\n=-=-=-= SIMPLE IP Lookup =-=-=-=\n\n")
 
     simpleIpLookup := app.Generate()
 
     if error := simpleIpLookup.Run(os.Args); error != nil {
         log.Fatal(error)
     }
+
+    fmt.Print("\nBye =)\n")
 }
 
