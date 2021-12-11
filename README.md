@@ -1,6 +1,6 @@
 # simple-ip-lookup
 
-> _A simple IP Lookup developed in Go_
+> _A simple IP Lookup tool developed in Go_
 
 ## Usage
 
